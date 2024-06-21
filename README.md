@@ -2,6 +2,10 @@ Real-time Polling and Chat Application
 
  Real-time Polling and Chat Application is a web-based platform that allows users to create polls in real-time and participate in chat conversations seamlessly.
 
+ Production URL: http://ec2-65-2-188-124.ap-south-1.compute.amazonaws.com/ 
+
+ [Deployed on Free Tier Personal EC2 Server using Github Action CI CD Pipeline Valid For 1 WEEK starting from 22th June]
+
 
 	
 
