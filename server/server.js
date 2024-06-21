@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 let polls = {};
 let chatMessages = [];
 let typingUsers = {};
-let userVotes = {}; // Track votes per user
+let userVotes = {}; 
 
 app.post('/register', (req, res) => {
     const { username, password } = req.body;
@@ -59,7 +59,6 @@ io.on('connection', (socket) => {
 
     socket.on('vote', ({ topic, option }) => {
         if (polls[topic] && polls[topic][option] !== undefined) {
-            // Check if user has already voted
             if (!userVotes[socket.user.username]) {
                 userVotes[socket.user.username] = {};
             }

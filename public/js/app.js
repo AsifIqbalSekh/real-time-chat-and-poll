@@ -2,7 +2,6 @@ let socket;
 let token;
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Event listener to stop typing when input loses focus
     document.getElementById('messageInput').addEventListener('blur', stopTyping);
     document.getElementById('messageInput').addEventListener('input', typing);
 });
@@ -146,7 +145,7 @@ function updatePolls(polls) {
             optionButton.onclick = () => vote(topic, option);
             pollDiv.appendChild(optionButton);
         }
-        pollDiv.style.marginBottom = '20px'; // Add spacing between polls
+        pollDiv.style.marginBottom = '20px'; 
         pollsDiv.appendChild(pollDiv);
     }
 }
@@ -162,7 +161,7 @@ document.getElementById('messageInput').addEventListener('input', () => {
 function typing() {
     socket.emit('typing', document.getElementById('loginUsername').value);
     clearTimeout(typingTimeout);
-    typingTimeout = setTimeout(stopTyping, 3000); // stopTyping after 3 seconds of inactivity
+    typingTimeout = setTimeout(stopTyping, 3000);
 }
 
 function stopTyping() {

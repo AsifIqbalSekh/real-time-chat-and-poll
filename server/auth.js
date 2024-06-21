@@ -1,9 +1,8 @@
 const jwt = require('jsonwebtoken');
-
 const users = [];
 const SECRET_KEY = 'your-secret-key';
 
-// server/auth.js
+
 
 function registerUser(username, password) {
     const user = { username, password };
@@ -12,7 +11,7 @@ function registerUser(username, password) {
         return { username, status: 400, message:"User Already Exists!" };
     }
     users.push(user);
-    return { username, status: 201 }; // Return a success status code
+    return { username, status: 201 };
 }
 
 function authenticateUser(username, password) {
