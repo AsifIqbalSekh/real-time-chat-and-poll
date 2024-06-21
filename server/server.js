@@ -94,7 +94,7 @@ io.on('connection', (socket) => {
     });
 });
 
-app.get("/test",(req,res){
+app.get("/test",(req,res)=>{
     res.json({"msg":"App is working fine", "Status":True})
 })
 
