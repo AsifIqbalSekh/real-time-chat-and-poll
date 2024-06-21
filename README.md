@@ -1,6 +1,6 @@
 Real-time Polling and Chat Application
 
-    Real-time Polling and Chat Application is a web-based platform that allows users to create polls in real-time and participate in chat conversations seamlessly.
+	Real-time Polling and Chat Application is a web-based platform that allows users to create polls in real-time and participate in chat conversations seamlessly.
 
 
 Overview
