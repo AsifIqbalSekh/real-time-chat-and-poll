@@ -1,4 +1,3 @@
-// server/server.js
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
@@ -16,6 +15,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 let polls = {};
 let chatMessages = [];
 let typingUsers = {};
+let userVotes = {}; // Track votes per user
 
 app.post('/register', (req, res) => {
     const { username, password } = req.body;
@@ -45,7 +45,6 @@ io.use((socket, next) => {
 });
 
 io.on('connection', (socket) => {
-    // console.log('a user connected');
     socket.broadcast.emit('userJoined', socket.user.username);
 
     socket.emit('initialData', { polls, chatMessages });
@@ -60,8 +59,17 @@ io.on('connection', (socket) => {
 
     socket.on('vote', ({ topic, option }) => {
         if (polls[topic] && polls[topic][option] !== undefined) {
-            polls[topic][option]++;
-            io.emit('updatePolls', polls);
+            // Check if user has already voted
+            if (!userVotes[socket.user.username]) {
+                userVotes[socket.user.username] = {};
+            }
+            if (!userVotes[socket.user.username][topic]) {
+                polls[topic][option]++;
+                userVotes[socket.user.username][topic] = true;
+                io.emit('updatePolls', polls);
+            } else {
+                socket.emit('alreadyVoted', { message: 'You have already voted on this topic.' });
+            }
         }
     });
 
@@ -75,18 +83,18 @@ io.on('connection', (socket) => {
         typingUsers[socket.user.username] = true;
         socket.broadcast.emit("typing", socket.user.username);
     });
+
     socket.on('stopTyping', () => {
         delete typingUsers[socket.user.username];
         socket.broadcast.emit('stopTyping');
     });
-    
+
     socket.on('disconnect', () => {
-        // console.log('user disconnected');
         socket.broadcast.emit('userLeft', socket.user.username);
     });
 });
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });

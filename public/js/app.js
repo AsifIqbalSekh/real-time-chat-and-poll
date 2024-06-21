@@ -1,13 +1,11 @@
 let socket;
 let token;
 
-
 document.addEventListener("DOMContentLoaded", () => {
     // Event listener to stop typing when input loses focus
     document.getElementById('messageInput').addEventListener('blur', stopTyping);
     document.getElementById('messageInput').addEventListener('input', typing);
 });
-
 
 async function register() {
     const username = document.getElementById('registerUsername').value;
@@ -24,7 +22,7 @@ async function register() {
 
         const data = await response.json();
 
-        if (data.status==201) {
+        if (data.status == 201) {
             document.getElementById('registrationForm').style.display = 'none';
             document.getElementById('registrationSuccess').style.display = 'block';
         } else {
@@ -34,7 +32,6 @@ async function register() {
         console.error('Error:', error);
     }
 }
-
 
 async function login() {
     const username = document.getElementById('loginUsername').value;
@@ -52,7 +49,6 @@ async function login() {
         if (response.ok) {
             const data = await response.json();
             token = data.token;
-            // console.log('Logged in:', data);
 
             document.getElementById('auth').style.display = 'none';
             document.getElementById('poll').style.display = 'block';
@@ -105,6 +101,10 @@ function initializeSocket() {
     socket.on('stopTyping', () => {
         document.getElementById('typingIndicator').innerText = '';
     });
+
+    socket.on('alreadyVoted', (data) => {
+        alert(data.message);
+    });
 }
 
 function createPoll() {
@@ -146,14 +146,18 @@ function updatePolls(polls) {
             optionButton.onclick = () => vote(topic, option);
             pollDiv.appendChild(optionButton);
         }
+        pollDiv.style.marginBottom = '20px'; // Add spacing between polls
         pollsDiv.appendChild(pollDiv);
     }
+}
+
+function vote(topic, option) {
+    socket.emit('vote', { topic, option });
 }
 
 document.getElementById('messageInput').addEventListener('input', () => {
     socket.emit('typing');
 });
-
 
 function typing() {
     socket.emit('typing', document.getElementById('loginUsername').value);
