@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time Polling and Chat</title>
+</head>
+<body>
+
+
+    <div id="auth">
+        <h2>Welcome to Real-time Polling and Chatting Application!</h2>
+        <br>
+        
+        <div id="registrationForm">
+            <h3>If You are first time using this application, please register below and Login!</h3>
+            <input id="registerUsername" placeholder="Username">
+            <input id="registerPassword" type="password" placeholder="Password"> <br> <br>
+            <button onclick="register()">Register</button>
+        </div>
+        <div id="registrationSuccess" style="display:none;">
+            <p>Registered successfully! Please log in.</p>
+        </div>
+        <br>
+        <div id="loginForm" style="display:block;">
+            <h3>Already Registered? Please login Below !</h3> 
+            <input id="loginUsername" placeholder="Username">
+            <input id="loginPassword" type="password" placeholder="Password"> <br> <br>
+            <button onclick="login()">Login</button>
+        </div>
+        <div id="loginError" style="display:none; color: red;">
+            <p>Login failed. Please register or try again with correct credential.</p>
+        </div>
+    </div>
+    
+    <div id="poll" style="display:none;">
+        <h2>******* Poll Section *****</h2>
+        <input id="pollTopic" placeholder="Poll Topic">
+        <input id="pollOption1" placeholder="Option 1">
+        <input id="pollOption2" placeholder="Option 2">
+        <br><br>
+        <button onclick="createPoll()">Create Poll</button>
+        <div id="polls"></div>
+    </div>
+
+
+    <div id="chat" style="display:none;">
+        <h2>******* Chat Section *****</h2>
+        <ul id="messages"></ul>
+        <input id="messageInput" autocomplete="off"><button onclick="sendMessage()">Send</button>
+        <div id="typingIndicator"></div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/app.js"></script>
+    <br><br><br><footer>Developed By SK Asif Iqbal( I am a Backend Developer Hence Please Ignore The Styling)</footer>
+</body>
+</html>
