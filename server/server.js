@@ -95,7 +95,7 @@ io.on('connection', (socket) => {
 });
 
 app.get("/test",(req,res)=>{
-    res.json({"msg":"App is working fine", "Status":True})
+    res.json({"msg":"App is working fine", "Status": true})
 })
 
 const PORT = process.env.PORT || 3000;
