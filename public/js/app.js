@@ -134,19 +134,25 @@ function addMessage(msg) {
 function updatePolls(polls) {
     const pollsDiv = document.getElementById('polls');
     pollsDiv.innerHTML = '';
+    
     for (const topic in polls) {
         const pollDiv = document.createElement('div');
         const topicHeader = document.createElement('h3');
         topicHeader.innerText = topic;
         pollDiv.appendChild(topicHeader);
+        
+        const optionsContainer = document.createElement('div'); 
         for (const option in polls[topic]) {
             const optionButton = document.createElement('button');
             optionButton.innerText = `${option} (${polls[topic][option]})`;
             optionButton.onclick = () => vote(topic, option);
-            pollDiv.appendChild(optionButton);
+            optionButton.classList.add('poll-option-button');
+            optionsContainer.appendChild(optionButton);
         }
+        
+        pollDiv.appendChild(optionsContainer); 
         pollDiv.style.marginBottom = '20px'; 
-        pollsDiv.appendChild(pollDiv);
+        pollsDiv.appendChild(pollDiv); 
     }
 }
 
